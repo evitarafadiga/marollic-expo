@@ -5,7 +5,7 @@ import { useMemo } from "react";
 export default function Add(props: any) {
 
     const processItems = (items: ITask[]) => {
-        return items.map(item => ({ id_task: item.id_task, name: item.name.toUpperCase() }));
+        return items.map(item => ({ id: item.id, name: item.name.toUpperCase() }));
     };
 
     const processedItems = useMemo(() => processItems(props.tasks), [props.tasks]);
@@ -18,9 +18,9 @@ export default function Add(props: any) {
                 <Text style={styles.add} className="bg-green-700 bg-solid p-1 rounded-lg w-20" onPress={props.addTask}>Add</Text>
             </View>
             <ScrollView style={styles.scroll} className="flex flex-col gap-2">
-                {props.tasks && props?.tasks?.map((task: ITask) =>
-                    <Task styles={styles} key={task.id_task} name={task.name} id_task={task.id_task} deleted={task.deleted} deleteTask={props.deleteTask} />
-                ).sort((a: ITask, b: ITask) => (a < b))}
+                {props?.tasks?.map((task: ITask) =>
+                    task.deleted == false && <Task styles={styles} key={task.id} name={task.name} id={task.id} deleted={task.deleted} deleteTask={props.deleteTask} />
+                )}
             </ScrollView>
         </View>
     );
